@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Do You Know What the Time Is?</title>
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			font-size: 100px;
+			text-align: center;
+			font-family: 'Courier New', Courier, monospace;
+
+            overflow: hidden;
+		}
+		h1 {
+			font-size: 170px;
+			margin-top: 0;
+		}
+
+        .home {
+            width: 100%;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .home > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .button {
+            padding: 10px 25px;
+            border: 2px solid #fff;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            width: min-content;
+            transition: .2s;
+        }
+
+        .button:hover {
+            color: black;
+            background: #fff;
+        }
+	</style>
+</head>
+<body>
+    <div class="home">
+    	<h1>Do You Know What the Time Is?</h1>
+        <div>
+            <div class="button" onclick="nothingHappened()">YES</div>
+            <div class="button" onclick="showTime()" style="margin-left: 30px;">NO</div>
+        </div>
+    </div>
+    <div id="time" style="display: none;">
+        <p style="font-weight: bold; font-size: 150px;">It is...</p>
+        <script>
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+            var amOrPm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            document.write('<p>' + hours + ':' + minutes + ':' + seconds + ' ' + amOrPm + '</p>');
+
+            function showTime() {
+                document.querySelector(".home").style.display = "none";
+                document.getElementById("time").style.display = "block";
+            }
+
+            function nothingHappened() {
+                document.querySelector(".home").innerHTML = "<h3>Deleting message in T minus 3 seconds...</h3>";
+                for (let i = 3; i > 0; i--) {
+                    setTimeout(() => {
+                        document.querySelector(".home").innerHTML += `${i}...`;
+                    }, (3-i)*1000);
+                }
+
+                setTimeout(() => {
+                    document.body.innerHTML = `
+    <p>Look at this cool ASCII art:</p>
+
+    <pre>
+        .
+        ":"
+        ___:____     |"\/"|
+    ,'        \`.    \  /
+    |  O        \___/  |
+    ~^~^~^~^~^~^~^~^~^~^~^~^~
+    </pre>
+                    `
+                }, 4000);
+            }
+        </script>
+    </div>
+</body>
+</html>
